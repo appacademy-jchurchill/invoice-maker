@@ -22,10 +22,10 @@ namespace InvoiceMaker.Modules
         private void HandleBeginRequest(object sender, EventArgs e)
         {
             var app = sender as InvoiceMakerApplication;
-            HttpContext context = app.Context;
-
             if (app != null)
             {
+                HttpContext context = app.Context;
+
                 string path = context.Request.FilePath;
 
                 if (path.StartsWith(apiHashPath))
