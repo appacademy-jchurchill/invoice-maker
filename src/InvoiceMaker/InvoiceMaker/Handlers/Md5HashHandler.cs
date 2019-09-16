@@ -56,6 +56,7 @@ namespace InvoiceMaker.Handlers
         {
             byte[] hash = GetMd5HashBinary(md5Hash, valueToHash);
             context.Response.ContentType = "application/octet-stream";
+            context.Response.AppendHeader("Content-Disposition", "attachment; filename=BinaryHash.bin");
             context.Response.BinaryWrite(hash);
         }
 

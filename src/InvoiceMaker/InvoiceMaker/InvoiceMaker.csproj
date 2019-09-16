@@ -81,6 +81,7 @@
   <ItemGroup>
     <Compile Include="Handlers\Md5HashHandler.cs" />
     <Compile Include="InvoiceMakerApplication.cs" />
+    <Compile Include="Modules\Md5HashModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <PropertyGroup>
