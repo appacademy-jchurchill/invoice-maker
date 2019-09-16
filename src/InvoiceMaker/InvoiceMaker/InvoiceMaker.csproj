@@ -116,9 +116,18 @@
     <Compile Include="Handlers\Md5HashHandler.cs" />
     <Compile Include="Initialization\RouteConfiguration.cs" />
     <Compile Include="InvoiceMakerApplication.cs" />
+    <Compile Include="Models\Client.cs" />
+    <Compile Include="Models\FeeLineItem.cs" />
+    <Compile Include="Models\ILineItem.cs" />
+    <Compile Include="Models\Invoice.cs" />
+    <Compile Include="Models\InvoiceStatus.cs" />
+    <Compile Include="Models\WorkDone.cs" />
+    <Compile Include="Models\WorkLineItem.cs" />
+    <Compile Include="Models\WorkType.cs" />
     <Compile Include="Modules\Md5HashModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
