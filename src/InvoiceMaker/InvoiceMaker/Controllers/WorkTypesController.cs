@@ -10,34 +10,33 @@ using System.Web.Mvc;
 
 namespace InvoiceMaker.Controllers
 {
-    public class ClientsController : Controller
+    public class WorkTypesController : Controller
     {
         [HttpGet]
         public ActionResult Index()
         {
-            var repository = new ClientRepository();
-            IList<Client> clients = repository.GetClients();
-            return View("Index", clients);
+            var repository = new WorkTypeRepository();
+            IList<WorkType> workTypes = repository.GetWorkTypes();
+            return View("Index", workTypes);
         }
 
         [HttpGet]
         public ActionResult Create()
         {
-            var formModel = new CreateClient();
-            formModel.IsActivated = true;
+            var formModel = new CreateWorkType();
             return View("Create", formModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(CreateClient formModel)
+        public ActionResult Create(CreateWorkType formModel)
         {
-            var repository = new ClientRepository();
+            var repository = new WorkTypeRepository();
 
             try
             {
-                var client = new Client(0, formModel.Name, formModel.IsActivated);
-                repository.Insert(client);
+                var workType = new WorkType(0, formModel.Name, formModel.Rate);
+                repository.Insert(workType);
                 return RedirectToAction("Index");
             }
             catch (SqlException se)
@@ -54,27 +53,27 @@ namespace InvoiceMaker.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            var repository = new ClientRepository();
-            Client client = repository.GetClient(id);
+            var repository = new WorkTypeRepository();
+            WorkType workType = repository.GetWorkType(id);
 
-            var formModel = new EditClient();
-            formModel.Id = client.Id;
-            formModel.IsActivated = client.IsActive;
-            formModel.Name = client.Name;
+            var formModel = new EditWorkType();
+            formModel.Id = workType.Id;
+            formModel.Rate = workType.Rate;
+            formModel.Name = workType.Name;
 
             return View("Edit", formModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, EditClient formModel)
+        public ActionResult Edit(int id, EditWorkType formModel)
         {
-            var repository = new ClientRepository();
+            var repository = new WorkTypeRepository();
 
             try
             {
-                var client = new Client(id, formModel.Name, formModel.IsActivated);
-                repository.Update(client);
+                var workType = new WorkType(id, formModel.Name, formModel.Rate);
+                repository.Update(workType);
                 return RedirectToAction("Index");
             }
             catch (SqlException se)
