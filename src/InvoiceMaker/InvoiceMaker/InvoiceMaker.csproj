@@ -101,6 +101,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Clients\Index.cshtml" />
     <Content Include="Views\Clients\Create.cshtml" />
+    <Content Include="Views\Clients\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -117,6 +118,7 @@
     <Compile Include="Controllers\ClientsController.cs" />
     <Compile Include="Controllers\InvoicesController.cs" />
     <Compile Include="FormModels\CreateClient.cs" />
+    <Compile Include="FormModels\EditClient.cs" />
     <Compile Include="Handlers\Md5HashHandler.cs" />
     <Compile Include="Initialization\RouteConfiguration.cs" />
     <Compile Include="InvoiceMakerApplication.cs" />
