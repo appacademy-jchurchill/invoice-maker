@@ -5,7 +5,10 @@ using System.Web;
 
 namespace InvoiceMaker.Models
 {
-    public class InvoiceStatus
+    public enum InvoiceStatus
     {
+        Open,
+        Finalized,
+        Closed
     }
 }
