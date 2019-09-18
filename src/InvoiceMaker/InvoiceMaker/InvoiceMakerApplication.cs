@@ -1,5 +1,7 @@
-﻿using InvoiceMaker.Initialization;
+﻿using InvoiceMaker.Data;
+using InvoiceMaker.Initialization;
 using System;
+using System.Data.Entity;
 using System.Diagnostics;
 using System.Web;
 using System.Web.Routing;
@@ -13,6 +15,9 @@ namespace InvoiceMaker
             Debug.WriteLine("Application_Start");
 
             RouteConfiguration.AddRoutes(RouteTable.Routes);
+
+            Database.SetInitializer(
+                new CreateDatabaseIfNotExists<Context>());
         }
 
         protected void Application_End(object sender, EventArgs e)

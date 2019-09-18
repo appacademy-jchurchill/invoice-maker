@@ -124,13 +124,16 @@
   <ItemGroup>
     <Content Include="Content\site.css" />
     <Content Include="Global.asax" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\ClientsController.cs" />
     <Compile Include="Controllers\InvoicesController.cs" />
     <Compile Include="Controllers\WorkDoneController.cs" />
     <Compile Include="Controllers\WorkTypesController.cs" />
+    <Compile Include="Data\Context.cs" />
     <Compile Include="FormModels\CreateClient.cs" />
     <Compile Include="FormModels\CreateWorkType.cs" />
     <Compile Include="FormModels\EditClient.cs" />

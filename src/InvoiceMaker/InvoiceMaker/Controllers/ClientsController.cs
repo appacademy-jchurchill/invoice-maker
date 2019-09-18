@@ -1,8 +1,10 @@
-﻿using InvoiceMaker.FormModels;
+﻿using InvoiceMaker.Data;
+using InvoiceMaker.FormModels;
 using InvoiceMaker.Models;
 using InvoiceMaker.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -12,10 +14,17 @@ namespace InvoiceMaker.Controllers
 {
     public class ClientsController : Controller
     {
+        private Context context;
+
+        public ClientsController()
+        {
+            context = new Context();
+        }
+
         [HttpGet]
         public ActionResult Index()
         {
-            var repository = new ClientRepository();
+            var repository = new ClientRepository(context);
             IList<Client> clients = repository.GetClients();
             return View("Index", clients);
         }
@@ -32,7 +41,7 @@ namespace InvoiceMaker.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(CreateClient formModel)
         {
-            var repository = new ClientRepository();
+            var repository = new ClientRepository(context);
 
             try
             {
@@ -40,12 +49,9 @@ namespace InvoiceMaker.Controllers
                 repository.Insert(client);
                 return RedirectToAction("Index");
             }
-            catch (SqlException se)
+            catch (DbUpdateException ex)
             {
-                if (se.Number == 2627)
-                {
-                    ModelState.AddModelError("Name", "That name is already taken.");
-                }
+                HandleDbUpdateException(ex);
             }
 
             return View("Create", formModel);
@@ -54,7 +60,7 @@ namespace InvoiceMaker.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            var repository = new ClientRepository();
+            var repository = new ClientRepository(context);
             Client client = repository.GetClient(id);
 
             var formModel = new EditClient();
@@ -69,7 +75,7 @@ namespace InvoiceMaker.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, EditClient formModel)
         {
-            var repository = new ClientRepository();
+            var repository = new ClientRepository(context);
 
             try
             {
@@ -77,15 +83,45 @@ namespace InvoiceMaker.Controllers
                 repository.Update(client);
                 return RedirectToAction("Index");
             }
-            catch (SqlException se)
+            catch (DbUpdateException ex)
             {
-                if (se.Number == 2627)
+                HandleDbUpdateException(ex);
+            }
+
+            return View("Edit", formModel);
+        }
+
+        /// <summary>
+        /// Behold! My proudest moment as a developer.
+        /// </summary>
+        /// <param name="ex"></param>
+        private void HandleDbUpdateException(DbUpdateException ex)
+        {
+            if (ex.InnerException != null && ex.InnerException.InnerException != null)
+            {
+                SqlException sqlException =
+                    ex.InnerException.InnerException as SqlException;
+                if (sqlException != null && sqlException.Number == 2627)
                 {
                     ModelState.AddModelError("Name", "That name is already taken.");
                 }
             }
+        }
 
-            return View("Edit", formModel);
+        private bool disposed = false;
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposed) return;
+
+            if (disposing)
+            {
+                context.Dispose();
+            }
+
+            disposed = true;
+
+            base.Dispose(disposing);
         }
     }
 }
