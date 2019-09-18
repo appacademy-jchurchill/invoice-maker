@@ -5,6 +5,11 @@
     <link rel="stylesheet" href="~/Content/site.css">
 </head>
 <body>
+    <ul>
+        <li>@Html.ActionLink("Clients", "Index", "Clients")</li>
+        <li>@Html.ActionLink("Work Types", "Index", "WorkTypes")</li>
+        <li>@Html.ActionLink("Work Done", "Index", "WorkDone")</li>
+    </ul>
     @RenderBody()
 </body>
 </html>

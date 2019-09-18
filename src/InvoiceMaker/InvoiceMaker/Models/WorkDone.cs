@@ -10,25 +10,36 @@ namespace InvoiceMaker.Models
         private Client _client;
         private WorkType _workType;
 
-        public WorkDone(Client client, WorkType workType)
+        public WorkDone(int id, Client client, WorkType workType)
         {
+            Id = id;
             _client = client;
             _workType = workType;
             StartedOn = DateTimeOffset.Now;
         }
 
-        public WorkDone(Client client, WorkType workType, 
+        public WorkDone(int id, Client client, WorkType workType, 
             DateTimeOffset startedOn)
-            : this(client, workType)
+            : this(id, client, workType)
         {
             StartedOn = startedOn;
         }
 
-        public WorkDone(Client client, WorkType workType, 
+        public WorkDone(int id, Client client, WorkType workType, 
             DateTimeOffset startedOn, DateTimeOffset endedOn)
-            : this(client, workType, startedOn)
+            : this(id, client, workType, startedOn)
         {
             EndedOn = endedOn;
+        }
+
+        public int Id { get; private set; }
+
+        public int ClientId
+        {
+            get
+            {
+                return _client.Id;
+            }
         }
 
         public string ClientName
@@ -36,6 +47,14 @@ namespace InvoiceMaker.Models
             get
             {
                 return _client.Name;
+            }
+        }
+
+        public int WorkTypeId
+        {
+            get
+            {
+                return _workType.Id;
             }
         }
 
