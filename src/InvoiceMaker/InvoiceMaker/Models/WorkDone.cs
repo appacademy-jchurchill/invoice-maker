@@ -7,67 +7,85 @@ namespace InvoiceMaker.Models
 {
     public class WorkDone
     {
-        private Client _client;
-        private WorkType _workType;
+        public WorkDone() { }
 
-        public WorkDone(int id, Client client, WorkType workType)
+        public WorkDone(int id, int clientId, int workTypeId)
         {
             Id = id;
-            _client = client;
-            _workType = workType;
+            ClientId = clientId;
+            WorkTypeId = workTypeId;
             StartedOn = DateTimeOffset.Now;
         }
 
-        public WorkDone(int id, Client client, WorkType workType, 
+        public WorkDone(int id, int clientId, int workTypeId,
             DateTimeOffset startedOn)
-            : this(id, client, workType)
+            : this(id, clientId, workTypeId)
         {
             StartedOn = startedOn;
         }
 
-        public WorkDone(int id, Client client, WorkType workType, 
-            DateTimeOffset startedOn, DateTimeOffset endedOn)
-            : this(id, client, workType, startedOn)
-        {
-            EndedOn = endedOn;
-        }
+        //public WorkDone(int id, Client client, WorkType workType)
+        //{
+        //    Id = id;
+        //    Client = client;
+        //    WorkType = workType;
+        //    StartedOn = DateTimeOffset.Now;
+        //}
 
-        public int Id { get; private set; }
+        //public WorkDone(int id, Client client, WorkType workType, 
+        //    DateTimeOffset startedOn)
+        //    : this(id, client, workType)
+        //{
+        //    StartedOn = startedOn;
+        //}
 
-        public int ClientId
-        {
-            get
-            {
-                return _client.Id;
-            }
-        }
+        //public WorkDone(int id, Client client, WorkType workType, 
+        //    DateTimeOffset startedOn, DateTimeOffset endedOn)
+        //    : this(id, client, workType, startedOn)
+        //{
+        //    EndedOn = endedOn;
+        //}
 
-        public string ClientName
-        {
-            get
-            {
-                return _client.Name;
-            }
-        }
+        public int Id { get; set; }
+        public int ClientId { get; set; }
+        public Client Client { get; set; }
+        public int WorkTypeId { get; set; }
+        public WorkType WorkType { get; set; }
 
-        public int WorkTypeId
-        {
-            get
-            {
-                return _workType.Id;
-            }
-        }
+        //public int ClientId
+        //{
+        //    get
+        //    {
+        //        return _client.Id;
+        //    }
+        //}
 
-        public string WorkTypeName
-        {
-            get
-            {
-                return _workType.Name;
-            }
-        }
+        //public string ClientName
+        //{
+        //    get
+        //    {
+        //        return _client.Name;
+        //    }
+        //}
 
-        public DateTimeOffset StartedOn { get; private set; }
-        public DateTimeOffset? EndedOn { get; private set; }
+        //public int WorkTypeId
+        //{
+        //    get
+        //    {
+        //        return _workType.Id;
+        //    }
+        //}
+
+        //public string WorkTypeName
+        //{
+        //    get
+        //    {
+        //        return _workType.Name;
+        //    }
+        //}
+
+        public DateTimeOffset StartedOn { get; set; }
+        public DateTimeOffset? EndedOn { get; set; }
 
         public void Finished()
         {
@@ -83,7 +101,7 @@ namespace InvoiceMaker.Models
 
             if (EndedOn != null)
             {
-                total = _workType.Rate * (decimal)(EndedOn.Value - StartedOn).TotalHours;
+                total = WorkType.Rate * (decimal)(EndedOn.Value - StartedOn).TotalHours;
             }
 
             return total;
