@@ -1,0 +1,27 @@
+﻿@model InvoiceMaker.FormModels.CreateWorkDoneView
+
+<h1>Start some work for a client</h1>
+
+@using (Html.BeginForm("Create", "WorkDone", FormMethod.Post, new { @class = "pure-form pure-form-aligned" }))
+{
+    @Html.AntiForgeryToken()
+
+    <fieldset>
+        <div class="pure-control-group">
+            @Html.LabelFor(model => model.ClientId)
+            @Html.DropDownListFor(model => model.ClientId, Model.ClientSelectList)
+            @Html.ValidationMessageFor(model => model.ClientId, "", new { @class = "pure-form-message-inline" })
+        </div>
+
+        <div class="pure-control-group">
+            @Html.LabelFor(model => model.WorkTypeId)
+            @Html.DropDownListFor(model => model.WorkTypeId, Model.WorkTypeSelectList)
+            @Html.ValidationMessageFor(model => model.WorkTypeId, "", new { @class = "pure-form-message-inline" })
+        </div>
+
+        <div class="pure-controls">
+            @Html.ActionLink("Cancel", "Index", new { }, new { @class = "pure-button" })
+            <button type="submit" class="pure-button pure-button-primary">Submit</button>
+        </div>
+    </fieldset>
+}
