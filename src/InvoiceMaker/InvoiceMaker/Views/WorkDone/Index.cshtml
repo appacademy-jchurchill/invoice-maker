@@ -23,8 +23,8 @@
             @foreach (var workDone in Model)
             {
                 <tr>
-                    <td>@workDone.ClientName</td>
-                    <td>@workDone.WorkTypeName</td>
+                    <td>@workDone.Client.Name</td>
+                    <td>@workDone.WorkType.Name</td>
                     <td>@workDone.StartedOn.ToString("yyyy/MM/dd hh:mm tt")</td>
                     <td>
                         @if (workDone.EndedOn != null)

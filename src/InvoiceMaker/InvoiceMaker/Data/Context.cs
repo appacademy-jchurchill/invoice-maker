@@ -12,6 +12,7 @@ namespace InvoiceMaker.Data
     {
         public DbSet<Client> Clients { get; set; }
         public DbSet<WorkType> WorkTypes { get; set; }
+        public DbSet<WorkDone> WorkDone { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
