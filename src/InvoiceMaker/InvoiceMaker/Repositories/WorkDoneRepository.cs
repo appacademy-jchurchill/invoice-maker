@@ -85,13 +85,13 @@ namespace InvoiceMaker.Repositories
                 connection.Open();
 
                 string sql = @"
-                    select wd.Id, wd.ClientId, wd.WorkTypeId,
+                    select wd.ClientId, wd.WorkTypeId,
 	                    wd.StartedOn, wd.EndedOn, c.ClientName, c.IsActivated,
 	                    wt.WorkTypeName, wt.Rate
                     from WorkDone wd
                     join Client c on c.Id = wd.ClientId
                     join WorkType wt on wt.Id = wd.WorkTypeId
-                    where Id = @Id
+                    where wd.Id = @Id
                 ";
 
                 using (var command = new SqlCommand(sql, connection))

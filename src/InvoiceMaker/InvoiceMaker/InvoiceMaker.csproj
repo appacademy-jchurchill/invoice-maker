@@ -106,6 +106,8 @@
     <Content Include="Views\WorkTypes\Create.cshtml" />
     <Content Include="Views\WorkTypes\Edit.cshtml" />
     <Content Include="Views\WorkDone\Index.cshtml" />
+    <Content Include="Views\WorkDone\Create.cshtml" />
+    <Content Include="Views\WorkDone\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -124,8 +126,10 @@
     <Compile Include="Controllers\WorkDoneController.cs" />
     <Compile Include="Controllers\WorkTypesController.cs" />
     <Compile Include="FormModels\CreateClient.cs" />
+    <Compile Include="FormModels\CreateWorkDone.cs" />
     <Compile Include="FormModels\CreateWorkType.cs" />
     <Compile Include="FormModels\EditClient.cs" />
+    <Compile Include="FormModels\EditWorkDone.cs" />
     <Compile Include="FormModels\EditWorkType.cs" />
     <Compile Include="Handlers\Md5HashHandler.cs" />
     <Compile Include="Initialization\RouteConfiguration.cs" />
