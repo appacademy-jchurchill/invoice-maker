@@ -1,5 +1,4 @@
-﻿using InvoiceMaker.Data;
-using InvoiceMaker.FormModels;
+﻿using InvoiceMaker.FormModels;
 using InvoiceMaker.Models;
 using InvoiceMaker.Repositories;
 using System;
@@ -12,19 +11,12 @@ using System.Web.Mvc;
 
 namespace InvoiceMaker.Controllers
 {
-    public class ClientsController : Controller
+    public class ClientsController : BaseController
     {
-        private Context context;
-
-        public ClientsController()
-        {
-            context = new Context();
-        }
-
         [HttpGet]
         public ActionResult Index()
         {
-            var repository = new ClientRepository(context);
+            var repository = new ClientRepository(Context);
             IList<Client> clients = repository.GetClients();
             return View("Index", clients);
         }
@@ -41,7 +33,7 @@ namespace InvoiceMaker.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(CreateClient formModel)
         {
-            var repository = new ClientRepository(context);
+            var repository = new ClientRepository(Context);
 
             try
             {
@@ -60,7 +52,7 @@ namespace InvoiceMaker.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            var repository = new ClientRepository(context);
+            var repository = new ClientRepository(Context);
             Client client = repository.GetClient(id);
 
             var formModel = new EditClient();
@@ -75,7 +67,7 @@ namespace InvoiceMaker.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, EditClient formModel)
         {
-            var repository = new ClientRepository(context);
+            var repository = new ClientRepository(Context);
 
             try
             {
@@ -106,22 +98,6 @@ namespace InvoiceMaker.Controllers
                     ModelState.AddModelError("Name", "That name is already taken.");
                 }
             }
-        }
-
-        private bool disposed = false;
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposed) return;
-
-            if (disposing)
-            {
-                context.Dispose();
-            }
-
-            disposed = true;
-
-            base.Dispose(disposing);
         }
     }
 }
