@@ -11,10 +11,14 @@ namespace InvoiceMaker.Data
     public class Context : DbContext
     {
         public DbSet<Client> Clients { get; set; }
+        public DbSet<WorkType> WorkTypes { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+
+            var workType = modelBuilder.Entity<WorkType>();
+            workType.Property(wt => wt.Rate).HasPrecision(5, 2);
         }
     }
 }

@@ -3,6 +3,7 @@ using InvoiceMaker.Models;
 using InvoiceMaker.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -10,12 +11,12 @@ using System.Web.Mvc;
 
 namespace InvoiceMaker.Controllers
 {
-    public class WorkTypesController : Controller
+    public class WorkTypesController : BaseController
     {
         [HttpGet]
         public ActionResult Index()
         {
-            var repository = new WorkTypeRepository();
+            var repository = new WorkTypeRepository(Context);
             IList<WorkType> workTypes = repository.GetWorkTypes();
             return View("Index", workTypes);
         }
@@ -31,7 +32,7 @@ namespace InvoiceMaker.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(CreateWorkType formModel)
         {
-            var repository = new WorkTypeRepository();
+            var repository = new WorkTypeRepository(Context);
 
             try
             {
@@ -39,12 +40,9 @@ namespace InvoiceMaker.Controllers
                 repository.Insert(workType);
                 return RedirectToAction("Index");
             }
-            catch (SqlException se)
+            catch (DbUpdateException ex)
             {
-                if (se.Number == 2627)
-                {
-                    ModelState.AddModelError("Name", "That name is already taken.");
-                }
+                HandleDbUpdateException(ex);
             }
 
             return View("Create", formModel);
@@ -53,7 +51,7 @@ namespace InvoiceMaker.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            var repository = new WorkTypeRepository();
+            var repository = new WorkTypeRepository(Context);
             WorkType workType = repository.GetWorkType(id);
 
             var formModel = new EditWorkType();
@@ -68,7 +66,7 @@ namespace InvoiceMaker.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, EditWorkType formModel)
         {
-            var repository = new WorkTypeRepository();
+            var repository = new WorkTypeRepository(Context);
 
             try
             {
@@ -76,12 +74,9 @@ namespace InvoiceMaker.Controllers
                 repository.Update(workType);
                 return RedirectToAction("Index");
             }
-            catch (SqlException se)
+            catch (DbUpdateException ex)
             {
-                if (se.Number == 2627)
-                {
-                    ModelState.AddModelError("Name", "That name is already taken.");
-                }
+                HandleDbUpdateException(ex);
             }
 
             return View("Edit", formModel);

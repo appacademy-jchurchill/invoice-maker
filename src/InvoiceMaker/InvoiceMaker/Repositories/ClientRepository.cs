@@ -17,12 +17,15 @@ namespace InvoiceMaker.Repositories
 
         public IList<Client> GetClients()
         {
-            return _context.Clients.ToList();
+            return _context.Clients
+                .OrderBy(c => c.Name)
+                .ToList();
         }
 
         public Client GetClient(int id)
         {
-            return _context.Clients.SingleOrDefault(c => c.Id == id);
+            return _context.Clients
+                .SingleOrDefault(c => c.Id == id);
         }
 
         public void Insert(Client client)

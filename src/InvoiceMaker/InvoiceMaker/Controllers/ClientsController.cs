@@ -82,22 +82,5 @@ namespace InvoiceMaker.Controllers
 
             return View("Edit", formModel);
         }
-
-        /// <summary>
-        /// Behold! My proudest moment as a developer.
-        /// </summary>
-        /// <param name="ex"></param>
-        private void HandleDbUpdateException(DbUpdateException ex)
-        {
-            if (ex.InnerException != null && ex.InnerException.InnerException != null)
-            {
-                SqlException sqlException =
-                    ex.InnerException.InnerException as SqlException;
-                if (sqlException != null && sqlException.Number == 2627)
-                {
-                    ModelState.AddModelError("Name", "That name is already taken.");
-                }
-            }
-        }
     }
 }
