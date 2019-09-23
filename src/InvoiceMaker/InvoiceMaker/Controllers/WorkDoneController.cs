@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace InvoiceMaker.Controllers
 {
-    public class WorkDoneController : Controller
+    public class WorkDoneController : BaseController
     {
         [HttpGet]
         public ActionResult Index()
@@ -23,7 +23,7 @@ namespace InvoiceMaker.Controllers
         public ActionResult Create()
         {
             CreateWorkDoneView viewModel = new CreateWorkDoneView();
-            viewModel.Clients = new ClientRepository().GetClients();
+            viewModel.Clients = new ClientRepository(Context).GetClients();
             viewModel.WorkTypes = new WorkTypeRepository().GetWorkTypes();
             return View("Create", viewModel);
         }
@@ -36,7 +36,7 @@ namespace InvoiceMaker.Controllers
             {
                 // Get the client and work type based on values submitted from
                 // the form
-                Client client = new ClientRepository().GetClient(formModel.ClientId);
+                Client client = new ClientRepository(Context).GetClient(formModel.ClientId);
                 WorkType workType = new WorkTypeRepository().GetWorkType(formModel.WorkTypeId);
 
                 // Create an instance of the work done with the client and work
@@ -55,7 +55,7 @@ namespace InvoiceMaker.Controllers
             viewModel.WorkTypeId = formModel.WorkTypeId;
 
             // Go get the value for the drop-downs, again.
-            viewModel.Clients = new ClientRepository().GetClients();
+            viewModel.Clients = new ClientRepository(Context).GetClients();
             viewModel.WorkTypes = new WorkTypeRepository().GetWorkTypes();
 
             return View("Create", viewModel);
@@ -73,7 +73,7 @@ namespace InvoiceMaker.Controllers
             viewModel.WorkTypeId = workDone.WorkTypeId;
             viewModel.StartedOn = workDone.StartedOn;
 
-            viewModel.Clients = new ClientRepository().GetClients();
+            viewModel.Clients = new ClientRepository(Context).GetClients();
             viewModel.WorkTypes = new WorkTypeRepository().GetWorkTypes();
 
             return View("Edit", viewModel);
@@ -87,7 +87,7 @@ namespace InvoiceMaker.Controllers
             {
                 // Get the client and work type based on values submitted from
                 // the form
-                Client client = new ClientRepository().GetClient(formModel.ClientId);
+                Client client = new ClientRepository(Context).GetClient(formModel.ClientId);
                 WorkType workType = new WorkTypeRepository().GetWorkType(formModel.WorkTypeId);
 
                 // Create an instance of the work done with the client and work
@@ -107,7 +107,7 @@ namespace InvoiceMaker.Controllers
             viewModel.StartedOn = formModel.StartedOn;
 
             // Go get the value for the drop-downs, again.
-            viewModel.Clients = new ClientRepository().GetClients();
+            viewModel.Clients = new ClientRepository(Context).GetClients();
             viewModel.WorkTypes = new WorkTypeRepository().GetWorkTypes();
 
             return View("Edit", viewModel);
